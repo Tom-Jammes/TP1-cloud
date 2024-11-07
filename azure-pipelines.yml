@@ -16,7 +16,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      $CloudContent = Get-Content -Path .\AzureResourceGroup-TP-CLOUD\Cloud-init.txt -Raw
+      $CloudContent = Get-Content -Path .\TP1-CLOUD-VMSS\Cloud-init.txt -Raw
       Write-Host $CloudContent
       $encodedContent = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($CloudContent))
       Write-Host "##vso[task.setvariable variable=CloudInitContent;]$encodedContent"
@@ -30,7 +30,7 @@ steps:
     resourceGroupName: 'TP1-cloud'
     location: 'East US'
     templateLocation: 'Linked artifact'
-    csmFile: '$(Build.SourcesDirectory)\AzureResourceGroup-TP-CLOUD\azuredeploy.json'
-    csmParametersFile: '$(Build.SourcesDirectory)\AzureResourceGroup-TP-CLOUD\azuredeploy.parameters.json'
+    csmFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.json'
+    csmParametersFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.parameters.json'
     overrideParameters: '-customData $(CloudInitContent) -adminPassword $(AdminPass)'
     deploymentMode: 'Incremental'
