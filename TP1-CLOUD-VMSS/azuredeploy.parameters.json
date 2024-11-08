@@ -8,17 +8,32 @@
     "osDiskType": {
       "value": "StandardSSD_LRS"
     },
+    "addressPrefixes": {
+      "value": [
+        "10.0.0.0/16"
+      ]
+    },
+    "subnets": {
+      "value": [
+        {
+          "name": "default",
+          "properties": {
+            "addressPrefix": "10.0.0.0/20"
+          }
+        }
+      ]
+    },
     "virtualNetworkId": {
-      "value": "/subscriptions/60802648-40a5-4ac4-bfd8-4552de815888/resourceGroups/TP1-cloud/providers/Microsoft.Network/virtualNetworks/vnet-eastus"
+      "value": "/subscriptions/60802648-40a5-4ac4-bfd8-4552de815888/resourceGroups/TP1-cloud/providers/Microsoft.Network/virtualNetworks/TP1-cloud-vnet"
     },
     "virtualNetworkName": {
-      "value": "vnet-eastus"
+      "value": "TP1-cloud-vnet"
     },
     "networkSecurityGroups": {
       "value": [
         {
-          "name": "basicNsgvnet-eastus-nic01",
-          "id": "/subscriptions/60802648-40a5-4ac4-bfd8-4552de815888/resourceGroups/TP1-cloud/providers/Microsoft.Network/networkSecurityGroups/basicNsgvnet-eastus-nic01",
+          "name": "basicNsgTP1-cloud-vnet-nic01",
+          "id": "/subscriptions/60802648-40a5-4ac4-bfd8-4552de815888/resourceGroups/TP1-cloud/providers/Microsoft.Network/networkSecurityGroups/basicNsgTP1-cloud-vnet-nic01",
           "rules": [
             {
               "name": "Tcp",
@@ -40,9 +55,9 @@
     "networkInterfaceConfigurations": {
       "value": [
         {
-          "name": "vnet-eastus-nic01",
+          "name": "TP1-cloud-vnet-nic01",
           "primary": true,
-          "subnetId": "/subscriptions/60802648-40a5-4ac4-bfd8-4552de815888/resourceGroups/TP1-cloud/providers/Microsoft.Network/virtualNetworks/vnet-eastus/subnets/snet-eastus-1",
+          "subnetId": "/subscriptions/60802648-40a5-4ac4-bfd8-4552de815888/resourceGroups/TP1-cloud/providers/Microsoft.Network/virtualNetworks/TP1-cloud-vnet/subnets/default",
           "applicationGatewayBackendAddressPools": [],
           "loadBalancerBackendAddressPools": [
             {
@@ -52,9 +67,9 @@
           "applicationSecurityGroups": [],
           "loadBalancerInboundNatPools": [],
           "enableAcceleratedNetworking": false,
-          "nsgName": "basicNsgvnet-eastus-nic01",
-          "nsgId": "/subscriptions/60802648-40a5-4ac4-bfd8-4552de815888/resourceGroups/TP1-cloud/providers/Microsoft.Network/networkSecurityGroups/basicNsgvnet-eastus-nic01",
-          "pipName": "publicIp-vnet-eastus-nic01"
+          "nsgName": "basicNsgTP1-cloud-vnet-nic01",
+          "nsgId": "/subscriptions/60802648-40a5-4ac4-bfd8-4552de815888/resourceGroups/TP1-cloud/providers/Microsoft.Network/networkSecurityGroups/basicNsgTP1-cloud-vnet-nic01",
+          "pipName": "publicIp-TP1-cloud-vnet-nic01"
         }
       ]
     },
@@ -62,7 +77,7 @@
       "value": "bepool"
     },
     "loadBalancerName": {
-      "value": "LB-TP1"
+      "value": "alb"
     },
     "loadbalancingRuleFrontEndPort": {
       "value": 80
@@ -77,16 +92,16 @@
       "value": 50000
     },
     "vmName": {
-      "value": "VMSS-TP1"
+      "value": "VMS1"
     },
     "virtualMachineScaleSetName": {
-      "value": "VMSS-TP1"
+      "value": "VMS1"
     },
     "instanceCount": {
       "value": "2"
     },
     "instanceSize": {
-      "value": "Standard_D2plds_v6"
+      "value": "Standard_DC1s_v2"
     },
     "platformFaultDomainCount": {
       "value": "1"
@@ -122,52 +137,6 @@
     },
     "vTPM": {
       "value": true
-    },
-    "vnetLocation": {
-      "value": "eastus"
-    },
-    "vnetExtendedLocation": {
-      "value": {}
-    },
-    "vnetVirtualNetworkName": {
-      "value": "vnet-eastus"
-    },
-    "vnetResourceGroupName": {
-      "value": "TP1-cloud"
-    },
-    "vnetDeploymentName": {
-      "value": "network-interface-associated-virtual-network-20241106134909"
-    },
-    "vnetNatGatewaysWithNewPublicIpAddress": {
-      "value": []
-    },
-    "vnetNatGatewaysWithoutNewPublicIpAddress": {
-      "value": []
-    },
-    "vnetNatGatewayPublicIpAddressesNewNames": {
-      "value": []
-    },
-    "vnetNetworkSecurityGroupsNew": {
-      "value": []
-    },
-    "vnetProperties": {
-      "value": {
-        "subnets": [
-          {
-            "name": "snet-eastus-1",
-            "properties": {
-              "addressPrefixes": [
-                "172.16.0.0/24"
-              ]
-            }
-          }
-        ],
-        "addressSpace": {
-          "addressPrefixes": [
-            "172.16.0.0/16"
-          ]
-        }
-      }
     }
   }
 }
