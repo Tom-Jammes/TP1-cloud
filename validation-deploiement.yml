@@ -6,7 +6,7 @@
 trigger:
 - master    #Le pipeline se déclenche lors de modif sur la branche master de notre dépot github
 
-pool: "agent-perso-mael"
+pool: "default"
 
 variables:
 - name: CloudInitContent
@@ -23,13 +23,6 @@ steps:
       Write-Host "##vso[task.setvariable variable=CloudInitContent;]$encodedContent"    # attribution d'une valeur à CloudInitContent
 
 ################### Déploiement ######################
-- task: AzureKeyVault@2
-  name: AzureKey 
-  inputs:
-    azureSubscription: 'Azure subscription TP Cloud(60802648-40a5-4ac4-bfd8-4552de815888)'
-    KeyVaultName: 'KV-TP1'
-    SecretsFilter: 'AdminPass'
-    RunAsPreJob: false
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
@@ -42,5 +35,5 @@ steps:
     templateLocation: 'Linked artifact'                                                         #
     csmFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.json'                        # Emplacement des fichiers ARM utilisés pour le déploiement
     csmParametersFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.parameters.json'   #
-    overrideParameters: '-customData $(CloudInitContent) -adminPassword $(AzureKey.AdminPass)'  # remplacement de valeurs 
-    deploymentMode: 'Incremental'
+    overrideParameters: '-customData $(CloudInitContent) -adminPassword $(AdminPass)'   # remplacement de valeurs 
+    deploymentMode: 'Validation'
