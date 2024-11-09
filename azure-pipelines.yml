@@ -10,6 +10,8 @@ pool: "agent-perso-mael"
 
 variables:
 - name: CloudInitContent
+- name: AZP_AGENT_CLEANUP_PSMODULES_IN_POWERSHELL
+  value: true
 
 ################### lecture et encodage du fichier d'initialisation cloud #####################
 steps:
