@@ -1,8 +1,5 @@
 #Requires -Version 3.0
 
-# Suppression des types étendus pour éviter les erreurs de doublons
-[System.Management.Automation.PSTypeExtensions]::RemoveAllTypeData()
-
 Param(
     [string] [Parameter(Mandatory=$true)] $ResourceGroupLocation,
     [string] $ResourceGroupName = 'TP1-CLOUD-VMSS',
