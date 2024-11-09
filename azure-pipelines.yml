@@ -6,7 +6,7 @@
 trigger:
 - master    #Le pipeline se déclenche lors de modif sur la branche master de notre dépot github
 
-pool: "default"
+pool: "agent-perso-mael"
 
 variables:
 - name: CloudInitContent
