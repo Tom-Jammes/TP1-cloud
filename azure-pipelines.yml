@@ -4,7 +4,7 @@
 # https://aka.ms/yaml
 
 trigger:
-- master    #Le pipeline se déclenche lors de modif sur la branche master de notre dépot github
+- master    #Le pipeline se dÃ©clenche lors de modif sur la branche master de notre dÃ©pot github
 
 pool: "default"
 
@@ -20,20 +20,27 @@ steps:
       $CloudContent = Get-Content -Path .\TP1-CLOUD-VMSS\Cloud-init.txt -Raw
       Write-Host $CloudContent
       $encodedContent = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($CloudContent))
-      Write-Host "##vso[task.setvariable variable=CloudInitContent;]$encodedContent"    # attribution d'une valeur à CloudInitContent
+      Write-Host "##vso[task.setvariable variable=CloudInitContent;]$encodedContent"    # attribution d'une valeur Ã  CloudInitContent
 
-################### Déploiement ######################
+################### DÃ©ploiement ######################
+- task: AzureKeyVault@2
+  name: AzureKey 
+  inputs:
+    azureSubscription: 'Azure subscription TP Cloud(60802648-40a5-4ac4-bfd8-4552de815888)'
+    KeyVaultName: 'KV-TP1'
+    SecretsFilter: 'AdminPass'
+    RunAsPreJob: false
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
     azureResourceManagerConnection: 'Azure subscription TP Cloud(60802648-40a5-4ac4-bfd8-4552de815888)'
-    subscriptionId: '60802648-40a5-4ac4-bfd8-4552de815888' # souscription azure qui sera utilisé pour le déploiement
+    subscriptionId: '60802648-40a5-4ac4-bfd8-4552de815888' # souscription azure qui sera utilisÃ© pour le dÃ©ploiement
     action: 'Create Or Update Resource Group'
     resourceGroupName: 'TP1-cloud'
-    location: 'East US'     # région dans laquelle le déploiement s'effectue
+    location: 'East US'     # rÃ©gion dans laquelle le dÃ©ploiement s'effectue
     templateLocation: 'Linked artifact'                                                         #
-    csmFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.json'                        # Emplacement des fichiers ARM utilisés pour le déploiement
+    csmFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.json'                        # Emplacement des fichiers ARM utilisÃ©s pour le dÃ©ploiement
     csmParametersFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.parameters.json'   #
-    overrideParameters: '-customData $(CloudInitContent) -adminPassword $(AdminPass)'   # remplacement de valeurs 
+    overrideParameters: '-customData $(CloudInitContent) -adminPassword $(AzureKey.AdminPass)'  # remplacement de valeurs 
     deploymentMode: 'Incremental'
