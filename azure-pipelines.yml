@@ -13,23 +13,23 @@ variables:
 
 ################### lecture et encodage du fichier d'initialisation cloud #####################
 steps:
-  - task: PowerShell@2
-    inputs:
-      targetType: 'inline'
-      script: |
-        $CloudContent = Get-Content -Path .\TP1-CLOUD-VMSS\Cloud-init.txt -Raw
-        Write-Host $CloudContent
-        $encodedContent = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($CloudContent))
-        Write-Host "##vso[task.setvariable variable=CloudInitContent;]$encodedContent"    # attribution d'une valeur à CloudInitContent
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $CloudContent = Get-Content -Path .\TP1-CLOUD-VMSS\Cloud-init.txt -Raw
+      Write-Host $CloudContent
+      $encodedContent = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($CloudContent))
+      Write-Host "##vso[task.setvariable variable=CloudInitContent;]$encodedContent"    # attribution d'une valeur à CloudInitContent
 
 ################### Déploiement ######################
-  - task: AzureKeyVault@2
-    name: AzureKey 
-    inputs:
-      azureSubscription: 'Azure subscription TP Cloud(60802648-40a5-4ac4-bfd8-4552de815888)'
-      KeyVaultName: 'KV-TP1'
-      SecretsFilter: 'AdminPass'
-      RunAsPreJob: false
+- task: AzureKeyVault@2
+  name: AzureKey 
+  inputs:
+    azureSubscription: 'Azure subscription TP Cloud(60802648-40a5-4ac4-bfd8-4552de815888)'
+    KeyVaultName: 'KV-TP1'
+    SecretsFilter: 'AdminPass'
+    RunAsPreJob: false
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
