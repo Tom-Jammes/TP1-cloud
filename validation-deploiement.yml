@@ -1,0 +1,39 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- master    #Le pipeline se déclenche lors de modif sur la branche master de notre dépot github
+
+pool: "default"
+
+variables:
+- name: CloudInitContent
+
+################### lecture et encodage du fichier d'initialisation cloud #####################
+steps:
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: |
+      $CloudContent = Get-Content -Path .\TP1-CLOUD-VMSS\Cloud-init.txt -Raw
+      Write-Host $CloudContent
+      $encodedContent = [Convert]::ToBase64String([Text.Encoding]::UTF8.GetBytes($CloudContent))
+      Write-Host "##vso[task.setvariable variable=CloudInitContent;]$encodedContent"    # attribution d'une valeur à CloudInitContent
+
+################### Déploiement ######################
+
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: 'Azure subscription TP Cloud(60802648-40a5-4ac4-bfd8-4552de815888)'
+    subscriptionId: '60802648-40a5-4ac4-bfd8-4552de815888' # souscription azure qui sera utilisé pour le déploiement
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: 'TP1-cloud'
+    location: 'East US'     # région dans laquelle le déploiement s'effectue
+    templateLocation: 'Linked artifact'                                                         #
+    csmFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.json'                        # Emplacement des fichiers ARM utilisés pour le déploiement
+    csmParametersFile: '$(Build.SourcesDirectory)\TP1-CLOUD-VMSS\azuredeploy.parameters.json'   #
+    overrideParameters: '-customData $(CloudInitContent) -adminPassword $(AdminPass)'   # remplacement de valeurs 
+    deploymentMode: 'Validation'
