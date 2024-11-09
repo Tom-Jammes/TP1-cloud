@@ -29,6 +29,7 @@ steps:
     azureSubscription: 'Azure subscription TP Cloud(60802648-40a5-4ac4-bfd8-4552de815888)'
     KeyVaultName: 'KV-TP1'
     SecretsFilter: 'AdminPass'
+    RunAsPreJob: false
 
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
