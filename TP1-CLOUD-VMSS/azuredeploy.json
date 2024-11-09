@@ -72,7 +72,7 @@
       "type": "string"
     },
     "adminPassword": {
-      "type": "secureString"
+      "type": "string"
     },
     "customData": {
       "type": "string"

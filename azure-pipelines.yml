@@ -31,11 +31,6 @@ steps:
     SecretsFilter: 'AdminPass'
     RunAsPreJob: false
 
-- script: |
-    Write-Host "Vérification des secrets :"
-    if ($env:AZUREKEY_AdminPass) { Write-Host "AdminPass récupéré avec succès." } else { Write-Host "Erreur : AdminPass non trouvé." }
-  displayName: "Vérification des secrets Key Vault"
-
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
