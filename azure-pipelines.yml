@@ -10,7 +10,7 @@ pool: "agent-perso-mael"
 
 variables:
 - name: CloudInitContent
-- name: AZP_AGENT_CLEANUP_PSMODULES_IN_POWERSHELL
+- name: AZP_AGENT_CLEANUP_PSMODULES_IN_POWERSHELL # variable d'environnement pour éviter les erreurs de nettoyage des modules powershell
   value: true
 
 ################### lecture et encodage du fichier d'initialisation cloud #####################
